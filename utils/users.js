@@ -12,11 +12,11 @@ export const Users = [
   {
     id: 3,
     username: "Nitzael Rodriguez",
-    profilePicture: "./src/assets/person/Brilli.jpeg",
+    profilePicture: "./src/assets/person/nitzael.jpg",
   },
   {
     id: 4,
     username: "Lorenmar Acevedo",
-    profilePicture: "./src/assets/person/Brilli.jpeg",
+    profilePicture: "./src/assets/person/lorenmar.jpg",
   },
 ];

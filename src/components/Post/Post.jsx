@@ -1,13 +1,20 @@
 import "./Post.css";
-import profileImg from "../../assets/person/yonathan.jpg";
-import postImg from "../../assets/post/post1.jpeg";
 import likeIcon from "../../assets/like.png";
 import heart from "../../assets/heart.png";
 import { MoreVert } from "@mui/icons-material";
 import { Users } from "../../../utils/users";
+import { useState } from "react";
 
 export default function Post({ post }) {
   const { date, desc, photo, like, comment, userId } = post;
+
+  const [likes, setLikes] = useState(like);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const likeHandler = () => {
+    setLikes(isLiked ? likes - 1 : likes + 1);
+    setIsLiked(!isLiked);
+  };
 
   return (
     <div className="post">
@@ -34,9 +41,19 @@ export default function Post({ post }) {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <img className="likeIcon" src={likeIcon} alt="" />
-            <img className="likeIcon" src={heart} alt="" />
-            <span className="postLikeCounter">{like} people like it</span>
+            <img
+              className="likeIcon"
+              src={likeIcon}
+              onClick={likeHandler}
+              alt=""
+            />
+            <img
+              className="likeIcon"
+              src={heart}
+              onClick={likeHandler}
+              alt=""
+            />
+            <span className="postLikeCounter">{likes} people like it</span>
           </div>
           <div className="postBottomRight">
             <span className="postCommentText">{comment} comments</span>
