@@ -1,0 +1,38 @@
+export const Posts = [
+  {
+    id: 1,
+    desc: "Amo mucho la naturaleza",
+    photo: "./src/assets/post/post1.jpeg",
+    date: "5 mins ago",
+    userId: 1,
+    like: 32,
+    comment: 9,
+  },
+  {
+    id: 2,
+    desc: "Que lindo el mejor amigo del hombre",
+    photo: "./src/assets/post/post2.jpeg",
+    date: "5 mins ago",
+    userId: 2,
+    like: 2,
+    comment: 4,
+  },
+  {
+    id: 1,
+    desc: "El Rey de la selva",
+    photo: "./src/assets/post/post3.jpeg",
+    date: "3 mins ago",
+    userId: 3,
+    like: 60,
+    comment: 7,
+  },
+  {
+    id: 2,
+    desc: "El mejor lugar para ir de vacaciones en Republica Dominicana",
+    photo: "./src/assets/post/post4.jpeg",
+    date: "1 mins ago",
+    userId: 4,
+    like: 100,
+    comment: 7,
+  },
+];
