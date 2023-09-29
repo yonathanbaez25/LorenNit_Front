@@ -2,17 +2,30 @@ import "./Post.css";
 import likeIcon from "../../assets/like.png";
 import heart from "../../assets/heart.png";
 import { MoreVert } from "@mui/icons-material";
-import { Users } from "../../../utils/users";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import avatar from "../../assets/person/avatar.png";
+import { format } from "timeago.js";
 
 export default function Post({ post }) {
-  const { date, desc, photo, like, comment, userId } = post;
+  const { createdAt, desc, img, likes, comment, userId } = post;
+  const URL = "http://localhost:8800/api";
 
-  const [likes, setLikes] = useState(like);
+  const [like, setLike] = useState(likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`${URL}/users/${userId}`);
+      setUser(res.data);
+    };
+
+    fetchUser();
+  }, []);
 
   const likeHandler = () => {
-    setLikes(isLiked ? likes - 1 : likes + 1);
+    setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
@@ -23,13 +36,11 @@ export default function Post({ post }) {
           <div className="postTopLeft">
             <img
               className="postProfileImg"
-              src={Users.filter((u) => u.id === userId)[0].profilePicture}
+              src={user.profilePicture || avatar}
               alt=""
             />
-            <span className="postUsername">
-              {Users.filter((u) => u.id === userId)[0].username}
-            </span>
-            <span className="postDate">{date}</span>
+            <span className="postUsername">{user.username}</span>
+            <span className="postDate">{format(createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVert />
@@ -37,7 +48,7 @@ export default function Post({ post }) {
         </div>
         <div className="postCenter">
           <span className="postText">{desc}</span>
-          <img className="postImg" src={photo} alt="" />
+          <img className="postImg" src={img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
@@ -53,7 +64,7 @@ export default function Post({ post }) {
               onClick={likeHandler}
               alt=""
             />
-            <span className="postLikeCounter">{likes} people like it</span>
+            <span className="postLikeCounter">{like} people like it</span>
           </div>
           <div className="postBottomRight">
             <span className="postCommentText">{comment} comments</span>

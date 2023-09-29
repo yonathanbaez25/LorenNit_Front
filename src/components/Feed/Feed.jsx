@@ -1,15 +1,31 @@
+import { useEffect, useState } from "react";
 import Post from "../Post/Post";
 import Share from "../Share/Share";
 import "./Feed.css";
-import { Posts } from "../../../utils/posts";
+import axios from "axios";
+// import { Posts } from "../../../utils/posts";
 
 export default function Feed() {
+  const [posts, setPosts] = useState([]);
+  const URL = "http://localhost:8800/api";
+
+  useEffect(() => {
+    const postFetch = async () => {
+      const res = await axios.get(
+        `${URL}/posts/timeline/6501ef9928907cfced0a505b`
+      );
+      setPosts(res.data);
+      console.log(posts);
+    };
+
+    postFetch();
+  }, []);
   return (
     <div className="feed">
       <div className="feedWrapper">
         <Share />
-        {Posts.map((p) => (
-          <Post key={p.id} post={p} />
+        {posts.map((p) => (
+          <Post key={p._id} post={p} />
         ))}
       </div>
     </div>
