@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import avatar from "../../assets/person/avatar.png";
 import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
   const { createdAt, desc, img, likes, comment, userId } = post;
@@ -17,12 +18,12 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`${URL}/users/${userId}`);
+      const res = await axios.get(`${URL}/users?userId${userId}`);
       setUser(res.data);
     };
 
     fetchUser();
-  }, []);
+  }, [userId]);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -34,11 +35,13 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <img
-              className="postProfileImg"
-              src={user.profilePicture || avatar}
-              alt=""
-            />
+            <Link to={`profile/${user.username}`}>
+              <img
+                className="postProfileImg"
+                src={user.profilePicture || avatar}
+                alt=""
+              />
+            </Link>
             <span className="postUsername">{user.username}</span>
             <span className="postDate">{format(createdAt)}</span>
           </div>
